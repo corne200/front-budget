@@ -1,0 +1,130 @@
+<div *ngIf="loading">Cargando...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<!-- Header del Presupuesto -->
+<div class="mb-4">
+  <div class="text-center mb-4">
+    <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent mb-1">
+      Sistema de Presupuesto
+    </h1>
+    <div class="w-20 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full"></div>
+    <p class="text-gray-600 mt-2 text-base">Gestiona tus finanzas de manera inteligente</p>
+  </div>
+  
+  <!-- Grid de tarjetas informativas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-4">
+    
+    <!-- Tarjeta Período -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+      <div class="flex items-center">
+        <i class="pi pi-calendar text-blue-600 text-lg mr-2"></i>
+        <div>
+          <p class="text-xs text-blue-600 font-medium">Período</p>
+          <p class="text-base font-bold text-blue-800">{{ getMesNombre(presupuesto.mes) }} {{ presupuesto.anio }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tarjeta Sueldo -->
+    <div class="bg-green-50 border border-green-200 rounded-lg p-3">
+      <div class="flex items-center">
+        <i class="pi pi-dollar text-green-600 text-lg mr-2"></i>
+        <div>
+          <p class="text-xs text-green-600 font-medium">Sueldo</p>
+          <p class="text-base font-bold text-green-800">{{ presupuesto.sueldo | currency:'USD':'symbol':'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tarjeta Total Gastos -->
+    <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
+      <div class="flex items-center">
+        <i class="pi pi-shopping-cart text-orange-600 text-lg mr-2"></i>
+        <div>
+          <p class="text-xs text-orange-600 font-medium">Total Gastos</p>
+          <p class="text-base font-bold text-orange-800">{{ getTotalGastos() | currency:'USD':'symbol':'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Tarjeta Saldo -->
+    <div [class]="getSaldo() >= 0 ? 'bg-emerald-50 border border-emerald-200' : 'bg-red-50 border border-red-200'" class="rounded-lg p-3">
+      <div class="flex items-center">
+        <i [class]="getSaldo() >= 0 ? 'pi pi-check-circle text-emerald-600' : 'pi pi-exclamation-triangle text-red-600'" class="text-lg mr-2"></i>
+        <div>
+          <p [class]="getSaldo() >= 0 ? 'text-emerald-600' : 'text-red-600'" class="text-xs font-medium">
+            {{ getSaldo() >= 0 ? 'Saldo Disponible' : 'Déficit' }}
+          </p>
+          <p [class]="getSaldo() >= 0 ? 'text-emerald-800' : 'text-red-800'" class="text-base font-bold">
+            {{ getSaldo() | currency:'USD':'symbol':'1.2-2' }}
+          </p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div *ngIf="gastos.length > 0">
+  <h3 class="text-xl font-bold text-gray-800 mb-4">
+    <i class="pi pi-list mr-2"></i>Gastos por Categoría
+  </h3>
+  <p-table [value]="gastos" 
+           rowGroupMode="subheader" 
+           groupRowsBy="categoriaId" 
+           sortField="categoriaId" 
+           sortMode="single"
+           dataKey="categoriaId"
+           [scrollable]="true"
+           scrollHeight="400px"
+           [tableStyle]="{'min-width': '60rem'}">
+    
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Descripción</th>
+        <th>Monto</th>
+        <th>Fecha</th>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="groupheader" let-gasto let-expanded="expanded">
+      <tr>
+        <td colspan="3" class="font-bold bg-gray-100 p-1" style="padding: 0.5rem;">
+          <button type="button" 
+                  pButton 
+                  pRipple 
+                  [pRowToggler]="gasto" 
+                  class="p-button-text p-button-rounded p-button-plain mr-1 p-button-sm" 
+                  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                  style="width: 1.5rem; height: 1.5rem;">
+          </button>
+          <i class="pi pi-tag mr-1 text-sm"></i>
+          <span class="text-sm">Categoría: {{ getCategoryName(gasto.categoriaId) }}</span>
+          <span class="ml-auto font-normal text-xs">
+            ({{ getCategoryCount(gasto.categoriaId) }} gastos - {{ getCategoryTotal(gasto.categoriaId) | currency:'USD':'symbol':'1.2-2' }})
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="groupfooter" let-gasto>
+      <tr class="p-rowgroup-footer">
+        <td colspan="2" class="text-right font-bold pr-2 py-1 text-sm">
+          Total Categoría:
+        </td>
+        <td class="font-bold py-1 text-sm">
+          {{ getCategoryTotal(gasto.categoriaId) | currency:'USD':'symbol':'1.2-2' }}
+        </td>
+      </tr>
+    </ng-template>
+    
+    <ng-template pTemplate="rowexpansion" let-gasto>
+      <tr>
+        <td class="py-1 text-sm">{{ gasto.descripcion }}</td>
+        <td class="py-1 text-sm">{{ gasto.monto | currency:'USD':'symbol':'1.2-2' }}</td>
+        <td class="py-1 text-sm">{{ gasto.fecha | date:'dd/MM/yyyy' }}</td>
+      </tr>
+    </ng-template>
+    
+  </p-table>
+</div>

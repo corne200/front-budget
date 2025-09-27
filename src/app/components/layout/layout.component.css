@@ -1,0 +1,132 @@
+.layout-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background: var(--surface-section);
+  border-right: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--surface-border);
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.sidebar-header i {
+  margin-right: 0.5rem;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.topbar {
+  height: 60px;
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.content-area {
+  flex: 1;
+  padding: 1.5rem;
+  overflow-y: auto;
+  background: var(--surface-ground);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+  }
+  
+  .sidebar.visible {
+    transform: translateX(0);
+  }
+  
+  .main-content {
+    width: 100%;
+  }
+}
+
+/* PrimeNG Overrides */
+:host ::ng-deep .p-panelmenu {
+  border: none;
+  background: transparent;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-panel {
+  border: none;
+  margin-bottom: 0;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a {
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  padding: 1rem;
+  font-weight: 500;
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-header > a:hover {
+  background: var(--surface-hover);
+}
+
+:host ::ng-deep .p-panelmenu .p-panelmenu-content {
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link {
+  padding: 0.75rem 1rem 0.75rem 2rem;
+  color: var(--text-color-secondary);
+  border: none;
+  background: transparent;
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link:hover {
+  background: var(--surface-hover);
+  color: var(--text-color);
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-link.router-link-active {
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+:host ::ng-deep .p-panelmenu .p-menuitem-icon {
+  margin-right: 0.5rem;
+}

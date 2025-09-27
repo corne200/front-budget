@@ -1,0 +1,124 @@
+<div class="registrar-gasto-container">
+  <h2><i class="pi pi-plus-circle"></i> Registrar Nuevo Gasto</h2>
+  
+  <p-card>
+    <!-- Cabecera: Presupuesto activo -->
+    <div class="presupuesto-activo-header mb-3">
+      <ng-container *ngIf="cargandoPresupuestoActivo; else presupuestoInfo">
+        <small>Cargando presupuesto activo...</small>
+      </ng-container>
+      <ng-template #presupuestoInfo>
+        <div *ngIf="presupuestoActivo; else sinPresupuesto">
+          <strong>Presupuesto activo:</strong>
+          <span class="ml-2">{{presupuestoActivo.anio}} - {{ getMesNombre(presupuestoActivo.mes) }}</span>
+        </div>
+        <ng-template #sinPresupuesto>
+          <small class="p-error">No hay presupuesto activo. No es posible registrar gastos.</small>
+        </ng-template>
+      </ng-template>
+    </div>
+    
+    <form [formGroup]="gastoForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <div class="formgrid grid">
+          <!-- Descripción -->
+          <div class="field col-12 md:col-6">
+            <label for="descripcion">Descripción *</label>
+            <input 
+              pInputText 
+              id="descripcion" 
+              formControlName="descripcion"
+              placeholder="Ej: Compra en supermercado"
+              [class.ng-invalid]="gastoForm.get('descripcion')?.invalid && gastoForm.get('descripcion')?.touched">
+            <small 
+              class="p-error" 
+              *ngIf="gastoForm.get('descripcion')?.invalid && gastoForm.get('descripcion')?.touched">
+              La descripción es requerida (mínimo 3 caracteres)
+            </small>
+          </div>
+
+          <!-- Monto -->
+          <div class="field col-12 md:col-6">
+            <label for="monto">Monto *</label>
+            <p-inputNumber
+              inputId="monto"
+              formControlName="monto"
+              mode="currency"
+              currency="COP"
+              locale="es-CO"
+              placeholder="0.00"
+              [class.ng-invalid]="gastoForm.get('monto')?.invalid && gastoForm.get('monto')?.touched">
+            </p-inputNumber>
+            <small 
+              class="p-error" 
+              *ngIf="gastoForm.get('monto')?.invalid && gastoForm.get('monto')?.touched">
+              El monto es requerido y debe ser mayor a 0
+            </small>
+          </div>
+
+          <!-- Fecha -->
+          <div class="field col-12 md:col-6">
+            <label for="fecha">Fecha *</label>
+            <p-calendar
+              inputId="fecha"
+              formControlName="fecha"
+              dateFormat="dd/mm/yy"
+              placeholder="Seleccione la fecha"
+              [showIcon]="true"
+              [class.ng-invalid]="gastoForm.get('fecha')?.invalid && gastoForm.get('fecha')?.touched">
+            </p-calendar>
+            <small 
+              class="p-error" 
+              *ngIf="gastoForm.get('fecha')?.invalid && gastoForm.get('fecha')?.touched">
+              La fecha es requerida
+            </small>
+          </div>
+
+          <!-- Categoría -->
+          <div class="field col-12 md:col-6">
+            <label for="categoria">Categoría *</label>
+            <p-dropdown
+              inputId="categoria"
+              formControlName="categoriaId"
+              [options]="categorias"
+              optionLabel="nombre"
+              optionValue="categoriaId"
+              placeholder="Seleccione una categoría"
+              [loading]="cargandoCategorias"
+              [class.ng-invalid]="gastoForm.get('categoriaId')?.invalid && gastoForm.get('categoriaId')?.touched">
+            </p-dropdown>
+            <small 
+              class="p-error" 
+              *ngIf="gastoForm.get('categoriaId')?.invalid && gastoForm.get('categoriaId')?.touched">
+              La categoría es requerida
+            </small>
+          </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-content-end gap-2 mt-4">
+          <button 
+            pButton 
+            pRipple 
+            type="button"
+            label="Limpiar" 
+            icon="pi pi-refresh" 
+            class="p-button-secondary"
+            (click)="limpiarFormulario()">
+          </button>
+          <button 
+            pButton 
+            pRipple 
+            type="submit"
+            label="Registrar Gasto" 
+            icon="pi pi-check"
+            [loading]="guardando"
+            [disabled]="gastoForm.invalid || guardando">
+          </button>
+        </div>
+      </div>
+    </form>
+  </p-card>
+
+  <p-toast></p-toast>
+</div>

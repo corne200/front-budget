@@ -1,0 +1,154 @@
+<div class="categorias-container">
+  <h2><i class="pi pi-tags"></i> Gestión de Categorías</h2>
+  
+  <p-card>
+    <p-toolbar styleClass="mb-4">
+      <ng-template pTemplate="left">
+        <button 
+          pButton 
+          pRipple 
+          label="Nueva Categoría" 
+          icon="pi pi-plus" 
+          class="p-button-success mr-2"
+          (click)="abrirDialogoNueva()">
+        </button>
+      </ng-template>
+      
+      <ng-template pTemplate="right">
+        <button 
+          pButton 
+          pRipple 
+          label="Actualizar" 
+          icon="pi pi-refresh" 
+          class="p-button-info"
+          (click)="cargarCategorias()">
+        </button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table 
+      [value]="categorias" 
+      [loading]="cargando"
+      [paginator]="true" 
+      [rows]="10"
+      [responsive]="true"
+      styleClass="p-datatable-striped">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">#</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th style="width: 8rem">Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-categoria let-i="rowIndex">
+        <tr>
+          <td>{{categoria.id}}</td>
+          <td>
+            <span class="font-semibold">{{categoria.nombre}}</span>
+          </td>
+          <td>
+            <span class="text-color-secondary">
+              {{categoria.descripcion || 'Sin descripción'}}
+            </span>
+          </td>
+          <td>
+            <button 
+              pButton 
+              pRipple 
+              icon="pi pi-pencil" 
+              class="p-button-rounded p-button-text p-button-info mr-2"
+              pTooltip="Editar"
+              (click)="editarCategoria(categoria)">
+            </button>
+            <button 
+              pButton 
+              pRipple 
+              icon="pi pi-trash" 
+              class="p-button-rounded p-button-text p-button-danger"
+              pTooltip="Eliminar"
+              (click)="confirmarEliminar(categoria)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="4" class="text-center">
+            <div class="empty-state">
+              <i class="pi pi-tags" style="font-size: 3rem; color: var(--surface-400);"></i>
+              <h4>No hay categorías</h4>
+              <p>Comienza creando tu primera categoría</p>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- Diálogo para crear/editar categoría -->
+  <p-dialog 
+    [(visible)]="mostrarDialogo" 
+    [header]="tituloDialogo"
+    [modal]="true" 
+    [style]="{width: '450px'}"
+    [draggable]="false"
+    [resizable]="false">
+    
+    <form [formGroup]="categoriaForm" (ngSubmit)="guardarCategoria()">
+      <div class="p-fluid">
+        <div class="field">
+          <label for="nombre">Nombre *</label>
+          <input 
+            pInputText 
+            id="nombre" 
+            formControlName="nombre"
+            placeholder="Ingrese el nombre de la categoría"
+            [class.ng-invalid]="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched">
+          <small 
+            class="p-error" 
+            *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched">
+            El nombre es requerido (mínimo 2 caracteres)
+          </small>
+        </div>
+
+        <div class="field">
+          <label for="descripcion">Descripción</label>
+          <textarea 
+            pInputTextarea 
+            id="descripcion" 
+            formControlName="descripcion"
+            rows="3"
+            placeholder="Ingrese una descripción opcional">
+          </textarea>
+        </div>
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <button 
+        pButton 
+        pRipple 
+        label="Cancelar" 
+        icon="pi pi-times" 
+        class="p-button-text"
+        (click)="cerrarDialogo()">
+      </button>
+      <button 
+        pButton 
+        pRipple 
+        [label]="esEdicion ? 'Actualizar' : 'Crear'" 
+        [icon]="esEdicion ? 'pi pi-check' : 'pi pi-plus'"
+        [loading]="guardando"
+        [disabled]="categoriaForm.invalid || guardando"
+        (click)="guardarCategoria()">
+      </button>
+    </ng-template>
+  </p-dialog>
+
+  <p-confirmDialog></p-confirmDialog>
+  <p-toast></p-toast>
+</div>

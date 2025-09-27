@@ -1,0 +1,109 @@
+.crear-presupuesto-container {
+  padding: 0;
+}
+
+.crear-presupuesto-container h2 {
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.crear-presupuesto-container h2 i {
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+}
+
+.field {
+  margin-bottom: 1.5rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.p-error {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+.info-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.info-content {
+  padding: 1.5rem;
+}
+
+.info-content h4 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info-content p {
+  margin: 0 0 1rem 0;
+  color: var(--text-color-secondary);
+  line-height: 1.5;
+}
+
+.info-content ul {
+  margin: 0 0 1rem 0;
+  padding-left: 1.5rem;
+  color: var(--text-color-secondary);
+}
+
+.info-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.tip-box {
+  background: var(--surface-section);
+  border: 1px solid var(--surface-border);
+  border-radius: 6px;
+  padding: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.tip-box i {
+  color: var(--yellow-500);
+  font-size: 1.25rem;
+  margin-top: 0.125rem;
+}
+
+.tip-box p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+:host ::ng-deep .p-inputtext.ng-invalid.ng-touched,
+:host ::ng-deep .p-inputnumber.ng-invalid.ng-touched .p-inputnumber-input,
+:host ::ng-deep .p-dropdown.ng-invalid.ng-touched,
+:host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched {
+  border-color: var(--red-500);
+}
+
+:host ::ng-deep .p-card .p-card-body {
+  padding: 2rem;
+}
+
+:host ::ng-deep .info-card .p-card-body {
+  padding: 0;
+}

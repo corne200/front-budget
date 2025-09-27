@@ -1,0 +1,22 @@
+/* Importar tema de PrimeNG - Aura Light Theme */
+@import 'primeng/resources/themes/aura-light-blue/theme.css';
+
+/* Importar estilos base de PrimeNG */
+@import 'primeng/resources/primeng.min.css';
+
+/* Importar iconos de PrimeIcons */
+@import 'primeicons/primeicons.css';
+
+/* Importar utilidades de PrimeFlex */
+@import 'primeflex/primeflex.css';
+
+/* Estilos globales personalizados */
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 2rem;
+}

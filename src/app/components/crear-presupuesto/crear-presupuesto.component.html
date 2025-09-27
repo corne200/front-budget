@@ -1,0 +1,145 @@
+<div class="crear-presupuesto-container">
+  <h2><i class="pi pi-plus-circle"></i> Crear Nuevo Presupuesto</h2>
+  
+  <div class="grid">
+    <div class="col-12 md:col-8">
+      <p-card>
+        <form [formGroup]="presupuestoForm" (ngSubmit)="onSubmit()">
+          <div class="p-fluid">
+            <div class="formgrid grid">
+              <!-- Año -->
+              <div class="field col-12 md:col-6">
+                <label for="anio">Año *</label>
+                <p-dropdown
+                  inputId="anio"
+                  formControlName="anio"
+                  [options]="anos"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Seleccione el año"
+                  [class.ng-invalid]="presupuestoForm.get('anio')?.invalid && presupuestoForm.get('anio')?.touched">
+                </p-dropdown>
+                <small 
+                  class="p-error" 
+                  *ngIf="presupuestoForm.get('anio')?.invalid && presupuestoForm.get('anio')?.touched">
+                  El año es requerido
+                </small>
+              </div>
+
+              <!-- Mes -->
+              <div class="field col-12 md:col-6">
+                <label for="mes">Mes *</label>
+                <p-dropdown
+                  inputId="mes"
+                  formControlName="mes"
+                  [options]="meses"
+                  optionLabel="label"
+                  optionValue="value"
+                  placeholder="Seleccione el mes"
+                  [class.ng-invalid]="presupuestoForm.get('mes')?.invalid && presupuestoForm.get('mes')?.touched">
+                </p-dropdown>
+                <small 
+                  class="p-error" 
+                  *ngIf="presupuestoForm.get('mes')?.invalid && presupuestoForm.get('mes')?.touched">
+                  El mes es requerido
+                </small>
+              </div>
+
+              <!-- Sueldo -->
+              <div class="field col-12">
+                <label for="sueldo">Sueldo Mensual *</label>
+                <p-inputNumber
+                  inputId="sueldo"
+                  formControlName="sueldo"
+                  mode="currency"
+                  currency="COP"
+                  locale="es-CO"
+                  placeholder="Ingrese su sueldo mensual"
+                  [class.ng-invalid]="presupuestoForm.get('sueldo')?.invalid && presupuestoForm.get('sueldo')?.touched">
+                </p-inputNumber>
+                <small 
+                  class="p-error" 
+                  *ngIf="presupuestoForm.get('sueldo')?.invalid && presupuestoForm.get('sueldo')?.touched">
+                  El sueldo es requerido y debe ser mayor a 0
+                </small>
+              </div>
+
+              <!-- Descripción -->
+              <div class="field col-12">
+                <label for="descripcion">Descripción (Opcional)</label>
+                <textarea 
+                  pInputTextarea 
+                  id="descripcion" 
+                  formControlName="descripcion"
+                  rows="3"
+                  placeholder="Ingrese una descripción opcional para este presupuesto">
+                </textarea>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="flex justify-content-end gap-2 mt-4">
+              <button 
+                pButton 
+                pRipple 
+                type="button"
+                label="Limpiar" 
+                icon="pi pi-refresh" 
+                class="p-button-secondary"
+                (click)="limpiarFormulario()">
+              </button>
+              <button 
+                pButton 
+                pRipple 
+                type="submit"
+                label="Crear Presupuesto" 
+                icon="pi pi-check"
+                [loading]="guardando"
+                [disabled]="presupuestoForm.invalid || guardando">
+              </button>
+            </div>
+          </div>
+        </form>
+      </p-card>
+    </div>
+
+    <!-- Panel informativo -->
+    <div class="col-12 md:col-4">
+      <p-card styleClass="info-card">
+        <ng-template pTemplate="header">
+          <div class="info-header">
+            <i class="pi pi-info-circle"></i>
+            <h3>Información</h3>
+          </div>
+        </ng-template>
+        
+        <div class="info-content">
+          <h4>¿Qué es un presupuesto?</h4>
+          <p>
+            Un presupuesto te ayuda a planificar y controlar tus gastos mensuales 
+            basándose en tus ingresos.
+          </p>
+          
+          <h4>Consejos:</h4>
+          <ul>
+            <li>Registra tu sueldo neto (después de descuentos)</li>
+            <li>Puedes crear presupuestos para meses futuros</li>
+            <li>Solo puedes tener un presupuesto por mes</li>
+            <li>Usa la descripción para notas adicionales</li>
+          </ul>
+          
+          <div class="tip-box">
+            <i class="pi pi-lightbulb"></i>
+            <p>
+              <strong>Tip:</strong> Una vez creado el presupuesto, podrás 
+              registrar gastos asociados a él y hacer seguimiento de tu 
+              progreso mensual.
+            </p>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <p-toast></p-toast>
+</div>
