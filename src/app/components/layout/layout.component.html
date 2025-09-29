@@ -2,24 +2,13 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-header">
-      <h2><i class="pi pi-wallet"></i> Budget Manager</h2>
+      <h2><i class="pi pi-wallet"></i>Presupuesto</h2>
     </div>
     <p-panelMenu [model]="menuItems" styleClass="w-full"></p-panelMenu>
   </div>
 
   <!-- Main Content -->
   <div class="main-content">
-    <div class="topbar">
-      <button 
-        pButton 
-        type="button" 
-        icon="pi pi-bars" 
-        class="p-button-text p-button-rounded"
-        (click)="toggleSidebar()">
-      </button>
-      <h1>Gestión de Presupuestos</h1>
-    </div>
-    
     <div class="content-area">
       <router-outlet></router-outlet>
     </div>
