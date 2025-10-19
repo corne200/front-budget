@@ -64,3 +64,8 @@
 :host ::ng-deep .p-inputtextarea.ng-invalid.ng-touched {
   border-color: var(--red-500);
 }
+
+/* Reducir el alto de las filas de la tabla */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.5rem 1rem;
+}

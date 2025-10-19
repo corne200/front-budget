@@ -1,0 +1,127 @@
+<div class="container">
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  
+  <p-card header="Presupuestos" styleClass="mb-4">
+    <div class="flex justify-content-between mb-4">
+      <h2>Listado de Presupuestos</h2>
+      <button 
+        pButton 
+        pRipple 
+        icon="pi pi-plus" 
+        label="Nuevo Presupuesto" 
+        (click)="openDialog()"
+        class="p-button-success">
+      </button>
+    </div>
+
+    <p-table 
+      [value]="presupuestos" 
+      [loading]="loading"
+      [paginator]="false" 
+      [globalFilterFields]="['mes', 'anio', 'sueldo']"
+      styleClass="p-datatable-sm">
+      
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Mes</th>
+          <th>Año</th>
+          <th>Sueldo</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="body" let-presupuesto>
+        <tr>
+          <td>{{ obtenerNombreMes(presupuesto.mes) }}</td>
+          <td>{{ presupuesto.anio }}</td>
+          <td>{{ presupuesto.sueldo | currency:'USD':'symbol':'1.2-2' }}</td>
+          <td>
+            <span 
+              [ngClass]="{
+                'status-badge': true,
+                'status-activo': presupuesto.activo,
+                'status-inactivo': !presupuesto.activo
+              }">
+              {{ presupuesto.activo ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+          <td class="actions">
+            <button 
+              *ngIf="!presupuesto.activo"
+              pButton 
+              pRipple 
+              type="button"
+              icon="pi pi-check"
+              class="p-button-rounded p-button-success p-button-icon-only"
+              style="width: 2rem; height: 2rem;"
+              pTooltip="Activar presupuesto"
+              (click)="activarPresupuesto(presupuesto.presupuestoId!)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center">
+            No se encontraron presupuestos registrados.
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <p-dialog 
+    header="Crear presupuesto" 
+    [(visible)]="dialogVisible" 
+    [modal]="true" 
+    [style]="{width: '450px'}"
+    styleClass="custom-dialog">
+    <div class="p-fluid">
+      <div class="p-field">
+        <label for="anio">Año</label>
+        <p-dropdown 
+          id="anio" 
+          [options]="anioOptions" 
+          [(ngModel)]="selectedAnio" 
+          placeholder="Selecciona un año" 
+          (onChange)="onAnioChange()">
+        </p-dropdown>
+      </div>
+      <div class="p-field">
+        <label for="mes">Mes</label>
+        <p-dropdown 
+          id="mes" 
+          [options]="mesOptions" 
+          [(ngModel)]="selectedMes" 
+          placeholder="Selecciona un mes">
+        </p-dropdown>
+      </div>
+      <div class="p-field">
+        <label for="sueldo">Sueldo</label>
+        <input 
+          pInputText 
+          id="sueldo" 
+          type="number" 
+          [(ngModel)]="sueldo" 
+          placeholder="Ingresa el sueldo">
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button 
+        label="Cancelar" 
+        icon="pi pi-times" 
+        class="p-button-text" 
+        (click)="dialogVisible = false">
+      </p-button>
+      <p-button 
+        label="Crear" 
+        icon="pi pi-check" 
+        class="p-button-primary" 
+        (click)="aceptarCrearPresupuesto()">
+      </p-button>
+    </ng-template>
+  </p-dialog>
+</div>

@@ -1,0 +1,63 @@
+<div class="container">
+  <p-toast></p-toast>
+
+  <p-card *ngIf="presupuestoActivo" header="Reporte de Gastos por Categoría" styleClass="mb-4">
+    <div class="presupuesto-info mb-4">
+      <h3>Presupuesto Activo: {{ obtenerNombreMes(presupuestoActivo.mes) }} {{ presupuestoActivo.anio }}</h3>
+      <p><strong>Sueldo:</strong> ${{ presupuestoActivo.sueldo }}</p>
+    </div>
+
+    <!-- Layout en dos columnas -->
+    <div style="display: flex; gap: 1rem;">
+      <!-- Columna izquierda: Gráfico -->
+      <div style="flex: 1;">
+        <div class="chart-container mb-4">
+          <canvas #chartCanvas width="400" height="200"></canvas>
+        </div>
+      </div>
+      <!-- Columna derecha: Tabla -->
+      <div style="flex: 1;">
+        <p-table [value]="reportes" [loading]="loading" styleClass="p-datatable-striped" sortMode="multiple" [sortField]="'totalGastos'" [sortOrder]="-1" [scrollable]="true" scrollHeight="500px">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="categoria">Categoría <p-sortIcon field="categoria"></p-sortIcon></th>
+              <th pSortableColumn="totalGastos" style="text-align: right">Total Gastos <p-sortIcon field="totalGastos"></p-sortIcon></th>
+              <th style="text-align: center">Porcentaje del Sueldo</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-reporte>
+            <tr>
+              <td>
+                <span class="font-semibold">{{ reporte.categoria }}</span>
+              </td>
+              <td style="text-align: right">
+                <span class="font-semibold">${{ reporte.totalGastos | number:'1.2-2' }}</span>
+              </td>
+              <td style="text-align: center">
+                <p-progressBar 
+                  [value]="reporte.porcentaje" 
+                  [showValue]="false" 
+                  styleClass="{{ reporte.porcentaje > 75 ? 'progress-danger' : reporte.porcentaje > 50 ? 'progress-warning' : 'progress-success' }}">
+                </p-progressBar>
+                <span class="progress-text">{{ reporte.porcentaje | number:'1.1-1' }}%</span>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="3" class="text-center">
+                No hay gastos registrados en este presupuesto.
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card *ngIf="!presupuestoActivo && !loading" header="Sin Presupuesto Activo" styleClass="mb-4">
+    <p>No hay un presupuesto activo para generar reportes.</p>
+  </p-card>
+</div>

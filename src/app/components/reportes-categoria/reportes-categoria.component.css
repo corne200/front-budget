@@ -1,0 +1,46 @@
+.container {
+  padding: 1rem;
+}
+
+.presupuesto-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.presupuesto-info p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* Estilos para las barras de progreso */
+:host ::ng-deep .progress-success .p-progressbar-value {
+  background-color: #22c55e !important;
+}
+
+:host ::ng-deep .progress-warning .p-progressbar-value {
+  background-color: #f59e0b !important;
+}
+
+:host ::ng-deep .progress-danger .p-progressbar-value {
+  background-color: #ef4444 !important;
+}
+
+.progress-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.chart-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.chart-container canvas {
+  max-width: 100%;
+  height: auto !important;
+}

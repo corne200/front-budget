@@ -1,0 +1,158 @@
+.container {
+  padding: 1rem;
+}
+
+h2 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  min-height: 3rem; /* Asegura que la celda tenga una altura mínima */
+}
+
+/* Asegura que el botón de acción tenga un tamaño consistente */
+.actions .p-button {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-activo {
+  background-color: #c8e6c9;
+  color: #256029;
+}
+
+.status-inactivo {
+  background-color: #ffcdd2;
+  color: #c63737;
+}
+
+/* Estilos para la tabla */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+/* Alineación específica para las columnas */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(1),
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(1) {
+  text-align: left;  /* Mes - alineación izquierda */
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(2),
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(2) {
+  text-align: center;  /* Año - alineación centro */
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(3),
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(3) {
+  text-align: right;  /* Sueldo - alineación derecha */
+  padding-right: 1.5rem;  /* Espaciado adicional para valores monetarios */
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-child(4),
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-child(4) {
+  text-align: center;  /* Estado - alineación centro */
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th:last-child,
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td:last-child {
+  text-align: center;  /* Acciones - alineación centro */
+}
+
+/* Estilos para el botón de activar */
+:host ::ng-deep .activar-btn {
+  background-color: #22c55e !important;
+  color: white !important;
+  border: none;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+:host ::ng-deep .activar-btn .p-button-icon {
+  color: white !important;
+  font-size: 1rem;
+}
+
+:host ::ng-deep .activar-btn:hover {
+  background-color: #16a34a !important;
+  transform: scale(1.05);
+}
+
+:host ::ng-deep .activar-btn:active {
+  background-color: #15803d !important;
+  transform: scale(0.95);
+}
+
+:host ::ng-deep .activar-btn .p-button-label {
+  display: none;
+}
+
+/* Estilos para el botón de nuevo presupuesto */
+:host ::ng-deep .p-button.p-button-success {
+  background-color: #22c55e;
+  border-color: #22c55e;
+}
+
+:host ::ng-deep .p-button.p-button-success:hover {
+  background-color: #16a34a;
+  border-color: #16a34a;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+  }
+  
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th,
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.5rem;
+  }
+}
+
+/* Estilos para el diálogo personalizado */
+.custom-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 1rem 1.5rem;
+  border-bottom: none;
+}
+
+.custom-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 600;
+}
+
+.custom-dialog .p-dialog-header .p-dialog-header-icon {
+  color: white;
+}

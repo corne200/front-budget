@@ -49,11 +49,6 @@ export class LayoutComponent {
           label: 'Ver Presupuestos',
           icon: 'pi pi-list',
           routerLink: '/presupuestos'
-        },
-        {
-          label: 'Crear Presupuesto',
-          icon: 'pi pi-plus-circle',
-          routerLink: '/presupuestos/nuevo'
         }
       ]
     },
@@ -73,9 +68,9 @@ export class LayoutComponent {
       icon: 'pi pi-chart-bar',
       items: [
         {
-          label: 'Generar Reportes',
+          label: 'Por categoría',
           icon: 'pi pi-file-pdf',
-          routerLink: '/reportes'
+          routerLink: '/reportes/categoria'
         }
       ]
     }

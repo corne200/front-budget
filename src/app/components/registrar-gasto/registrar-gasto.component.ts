@@ -11,6 +11,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
 import { GastoService } from '../../gasto.service';
 import { CategoriaService } from '../../categoria.service';
 import { PresupuestoService } from '../../presupuesto.service';
@@ -66,7 +67,8 @@ export class RegistrarGastoComponent implements OnInit {
     private categoriaService: CategoriaService,
     private presupuestoService: PresupuestoService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private config: PrimeNGConfig
   ) {
     this.gastoForm = this.fb.group({
       descripcion: ['', [Validators.required, Validators.minLength(3)]],
@@ -78,6 +80,20 @@ export class RegistrarGastoComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Configurar el idioma del calendario
+    this.config.setTranslation({
+      dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+      dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+      dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+      monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+      monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+      today: 'Hoy',
+      clear: 'Limpiar',
+      dateFormat: 'dd/mm/yy',
+      weekHeader: 'Sm',
+      firstDayOfWeek: 1
+    });
+    
     this.cargarCategorias();
     this.cargarPresupuestoActivo();
   }
@@ -134,25 +150,25 @@ export class RegistrarGastoComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Éxito',
-            detail: 'Gasto registrado correctamente'
+            detail: 'Gasto registrado correctamente',
+            life: 3000
           });
           
+          // Limpiar el formulario manteniendo la fecha actual
           this.gastoForm.reset({
-            fecha: new Date()
+            fecha: new Date(),
+            presupuestoId: this.presupuestoActivo?.presupuestoId || null
           });
           
           this.guardando = false;
-          
-          setTimeout(() => {
-            this.router.navigate(['/gastos']);
-          }, 1500);
         },
         error: (error) => {
           console.error('Error al registrar gasto:', error);
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'No se pudo registrar el gasto'
+            detail: 'No se pudo registrar el gasto',
+            life: 3000
           });
           this.guardando = false;
         }

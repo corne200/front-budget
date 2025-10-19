@@ -29,8 +29,8 @@
     <p-table 
       [value]="categorias" 
       [loading]="cargando"
-      [paginator]="true" 
-      [rows]="10"
+      [scrollable]="true"
+      scrollHeight="400px"
       [responsive]="true"
       styleClass="p-datatable-striped">
       
@@ -38,21 +38,15 @@
         <tr>
           <th style="width: 3rem">#</th>
           <th>Nombre</th>
-          <th>Descripción</th>
           <th style="width: 8rem">Acciones</th>
         </tr>
       </ng-template>
       
       <ng-template pTemplate="body" let-categoria let-i="rowIndex">
         <tr>
-          <td>{{categoria.id}}</td>
+          <td>{{i + 1}}</td>
           <td>
             <span class="font-semibold">{{categoria.nombre}}</span>
-          </td>
-          <td>
-            <span class="text-color-secondary">
-              {{categoria.descripcion || 'Sin descripción'}}
-            </span>
           </td>
           <td>
             <button 
@@ -77,7 +71,7 @@
       
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="4" class="text-center">
+          <td colspan="3" class="text-center">
             <div class="empty-state">
               <i class="pi pi-tags" style="font-size: 3rem; color: var(--surface-400);"></i>
               <h4>No hay categorías</h4>
