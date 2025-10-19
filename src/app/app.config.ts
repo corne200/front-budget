@@ -5,8 +5,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
 
-//export const BASE_API_URL = 'https://backend-budget-production.up.railway.app';
-export const BASE_API_URL = 'http://localhost:8080';
+export const BASE_API_URL = 'https://backend-budget-production.up.railway.app';
+//export const BASE_API_URL = 'http://localhost:8080';
 
 export const appConfig: ApplicationConfig = {
   providers: [
